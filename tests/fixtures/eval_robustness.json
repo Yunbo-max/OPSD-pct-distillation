@@ -1,0 +1,10 @@
+{
+  "dataset": "rrb-aime",
+  "val_n": 2,
+  "results": [
+    {"problem_id": "p1", "val_n": 2, "num_correct": 2, "metadata": {"perturbation": "clean"}},
+    {"problem_id": "p1_swap", "val_n": 2, "num_correct": 1, "metadata": {"perturbation": "swap_numbers"}},
+    {"problem_id": "p2", "val_n": 2, "num_correct": 0, "metadata": {"perturbation": "clean"}},
+    {"problem_id": "p2_swap", "val_n": 2, "num_correct": 0, "metadata": {"perturbation": "swap_numbers"}}
+  ]
+}

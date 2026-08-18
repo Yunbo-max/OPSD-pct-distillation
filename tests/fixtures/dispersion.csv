@@ -1,0 +1,4 @@
+id,n_correct_refs,rollout_chars,sinkhorn_correct_correct
+p1,4,100,0.10
+p2,4,100,0.20
+p3,4,100,0.90

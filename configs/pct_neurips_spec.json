@@ -1,0 +1,86 @@
+{
+  "name": "pct_multireference_privileged_transport",
+  "date": "2026-08-18",
+  "training_framework": "OPSD",
+  "primary_model": "Qwen/Qwen3-4B",
+  "training_dataset": {
+    "name": "OPSD Math Train",
+    "examples": 29434,
+    "required_reference_fields": ["problem", "solution", "references"],
+    "min_correct_references": 4
+  },
+  "diagnostics": {
+    "examples": 500,
+    "references_per_problem": {
+      "correct": 4,
+      "wrong": 1,
+      "shuffled": 1
+    },
+    "distance_metrics": ["euclidean", "sinkhorn", "uot", "fgw"],
+    "required_outputs": [
+      "diagnostics/ot_diag_500.jsonl",
+      "diagnostics/ot_diag_500_summary.tsv",
+      "diagnostics/ot_diag_500_per_problem.csv",
+      "diagnostics/intervention_100.jsonl"
+    ],
+    "gate": "Continue to training only if correct/correct distances separate from correct/wrong or correct/shuffled, and high-dispersion examples are identifiable."
+  },
+  "short_matrix": {
+    "model": "Qwen/Qwen3-4B",
+    "train_examples": 5000,
+    "max_steps": 100,
+    "required_methods": [
+      "none",
+      "phf_single",
+      "phf_random",
+      "phf_mean",
+      "phf_medoid",
+      "phf_grassmann",
+      "phf_set",
+      "set_ot",
+      "set_fgw",
+      "set_uot"
+    ]
+  },
+  "full_matrix": {
+    "model": "Qwen/Qwen3-4B",
+    "train_examples": 29434,
+    "required_methods": [
+      "none",
+      "phf_single",
+      "phf_random",
+      "phf_mean",
+      "phf_medoid",
+      "phf_grassmann",
+      "phf_set",
+      "set_ot",
+      "set_fgw",
+      "set_uot"
+    ],
+    "gate": "Run only after the 5k matrix shows PCT gains, especially in high reference-dispersion groups."
+  },
+  "scaling_matrix": {
+    "models": ["Qwen/Qwen3-1.7B", "Qwen/Qwen3-4B", "Qwen/Qwen3-8B"],
+    "train_examples": 29434,
+    "required_methods": ["none", "phf_single", "phf_mean", "phf_grassmann", "phf_set", "set_fgw", "set_uot"]
+  },
+  "external_baselines": ["base", "sft", "grpo", "opsd", "oprd", "phf"],
+  "primary_evaluation": {
+    "datasets": ["aime24", "aime25", "hmmt25"],
+    "problems_per_dataset": 30,
+    "val_n": 12,
+    "metric": "Average@12"
+  },
+  "secondary_evaluation": {
+    "datasets": ["aimo", "rrb-aime"],
+    "robustness_group_field": "perturbation"
+  },
+  "paper_claim_gates": [
+    "Set/PCT methods beat PHF-style single-reference hidden-flow matching on Average@12.",
+    "Set/PCT gains are larger on high reference-dispersion problems than low reference-dispersion problems.",
+    "FGW or UOT diagnostics improve correct/correct versus correct/wrong or correct/shuffled AUROC over Euclidean matching.",
+    "Causal intervention shows valid or nearest-valid flow improves continuation evidence more than mean, wrong, or shuffled flow.",
+    "Contamination robustness degrades Mean-PHF faster than set/transport methods, or the paper explicitly reports the failure mode."
+  ],
+  "required_artifact_groups": ["metadata", "dataset_provenance", "manifests", "train_states", "eval_json", "tables", "figures", "artifact_checksums"]
+}

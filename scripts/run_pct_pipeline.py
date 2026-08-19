@@ -715,9 +715,10 @@ def build_steps(args) -> list[Step]:
 
 
 def main() -> None:
+    repo_root = Path(__file__).resolve().parent.parent
     parser = argparse.ArgumentParser(description="Stage runner for the PCT experiment pipeline.")
-    parser.add_argument("--opsd_root", default="/root/OPSD")
-    parser.add_argument("--set_phf_root", default="/root/set-phf")
+    parser.add_argument("--opsd_root", default=str(repo_root))
+    parser.add_argument("--set_phf_root", default=str(repo_root / "set-phf"))
     parser.add_argument("--python", default="python3")
     parser.add_argument("--model", default="Qwen/Qwen3-4B")
     parser.add_argument("--model_tag", default="qwen3_4b")

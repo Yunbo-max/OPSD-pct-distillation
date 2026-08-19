@@ -4,10 +4,12 @@ set -euo pipefail
 export WANDB_MODE="${WANDB_MODE:-offline}"
 export NCCL_P2P_DISABLE="${NCCL_P2P_DISABLE:-1}"
 
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ACCELERATE_CFG="${ACCELERATE_CFG:-${REPO_ROOT}/accelerate.yaml}"
 MODEL="${MODEL:-Qwen/Qwen3-4B}"
 MODEL_TAG="${MODEL_TAG:-qwen3_4b}"
 DATASET="${DATASET:-siyanzhao/Openthoughts_math_30k_opsd}"
-OUT_ROOT="${OUT_ROOT:-/root/OPSD/runs/pct_short_matrix}"
+OUT_ROOT="${OUT_ROOT:-${REPO_ROOT}/runs/pct_short_matrix}"
 NUM_PROCESSES="${NUM_PROCESSES:-1}"
 MAX_STEPS="${MAX_STEPS:-100}"
 TRAIN_NUM_SAMPLES="${TRAIN_NUM_SAMPLES:-5000}"
@@ -20,14 +22,24 @@ PCT_REFS="${PCT_REFS:-4}"
 SAMPLE_TAG="${SAMPLE_TAG:-$([ "${TRAIN_NUM_SAMPLES}" = "0" ] && printf full || printf n%s "${TRAIN_NUM_SAMPLES}")}"
 
 METHODS="${METHODS:-none phf_single phf_random phf_mean phf_medoid phf_grassmann phf_set set_ot set_fgw set_uot}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+HAS_ACCELERATE=0
+if [[ -f "${ACCELERATE_CFG}" ]]; then
+  HAS_ACCELERATE=1
+fi
+if [[ "${HAS_ACCELERATE}" -eq 0 ]]; then
+  echo "[run_pct_short_matrix] accelerate.yaml not found at ${ACCELERATE_CFG}; using direct python launcher."
+fi
 
 for METHOD in ${METHODS}; do
   RUN_NAME="${MODEL_TAG}_${METHOD}_steps${MAX_STEPS}_${SAMPLE_TAG}"
-  accelerate launch \
-    --config_file accelerate.yaml \
-    --num_processes "${NUM_PROCESSES}" \
-    --gradient_accumulation_steps "${GRAD_ACCUM}" \
-    opsd_train.py \
+  if [[ "${HAS_ACCELERATE}" -eq 1 ]]; then
+    CMD=(accelerate launch --config_file "${ACCELERATE_CFG}" --num_processes "${NUM_PROCESSES}" --gradient_accumulation_steps "${GRAD_ACCUM}")
+    CMD+=(opsd_train.py)
+  else
+    CMD=("${PYTHON_BIN}" opsd_train.py)
+  fi
+  "${CMD[@]}" \
     --model_name_or_path "${MODEL}" \
     --pct_dataset_name "${DATASET}" \
     --pct_train_num_samples "${TRAIN_NUM_SAMPLES}" \

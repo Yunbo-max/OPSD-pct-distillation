@@ -36,7 +36,7 @@ If `references` is missing, the collator falls back to the single `solution`.
 Generate candidate references from the upstream OPSD data when a real multi-reference file is not available yet:
 
 ```bash
-python /root/set-phf/scripts/build_multiref_candidates.py \
+python ./set-phf/scripts/build_multiref_candidates.py \
   --dataset_name siyanzhao/Openthoughts_math_30k_opsd \
   --dataset_split train \
   --model Qwen/Qwen3-4B \
@@ -48,7 +48,7 @@ python /root/set-phf/scripts/build_multiref_candidates.py \
 Audit candidates before using them for training or diagnostics:
 
 ```bash
-python /root/set-phf/scripts/audit_multiref_candidates.py \
+python ./set-phf/scripts/audit_multiref_candidates.py \
   /path/to/multiref_opsd_5k_candidates.jsonl \
   --min_refs 4 \
   --require_wrong_reference \
@@ -107,11 +107,11 @@ bash scripts/run_pct_4b_set_uot.sh
    - one-step `set_uot` with 4 references;
    - one-problem AIME24 eval with `--backend transformers`;
    - eval JSON summarization.
-1. Run 500-problem diagnostic with the standalone `/root/set-phf` tooling to choose Euclidean/PHF/OT/UOT/FGW.
+1. Run 500-problem diagnostic with the standalone `set-phf` tooling (cloned as `./set-phf`) to choose Euclidean/PHF/OT/UOT/FGW.
    Summarize it with:
 
 ```bash
-python /root/set-phf/scripts/summarize_ot_diagnostic.py \
+python ./set-phf/scripts/summarize_ot_diagnostic.py \
   /path/to/ot_diagnostic_500.jsonl \
   --summary_tsv /path/to/ot_diagnostic_500_summary.tsv \
   --per_problem_csv /path/to/ot_diagnostic_500_per_problem.csv

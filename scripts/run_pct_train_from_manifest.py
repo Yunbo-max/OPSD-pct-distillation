@@ -72,22 +72,27 @@ def train_complete(record: dict, require_train_metrics: bool) -> bool:
     return not train_metric_missing(record, final_train_metrics(output_dir))
 
 
-def build_command(record: dict, args: argparse.Namespace) -> list[str]:
+def resolve_accelerate_config(path: str) -> Path | None:
+    p = Path(path)
+    candidates: list[Path] = []
+    if p.is_absolute():
+        candidates.append(p)
+    else:
+        candidates.append(Path.cwd() / p)
+        candidates.append(Path(__file__).resolve().parent.parent / p)
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def build_command(record: dict, args: argparse.Namespace, accelerate_config: Path | None) -> list[str]:
     run_name = str(record["run_name"])
     method = str(record.get("method", "none"))
     output_dir = str(record["output_dir"])
     pct_weight = float(record.get("pct_loss_weight", 0.0 if method == "none" else args.pct_loss_weight))
 
-    cmd = [
-        args.accelerate,
-        "launch",
-        "--config_file",
-        args.accelerate_config,
-        "--num_processes",
-        str(args.num_processes),
-        "--gradient_accumulation_steps",
-        str(args.grad_accum),
-        "opsd_train.py",
+    common_args = [
         "--model_name_or_path",
         str(record["model"]),
         "--pct_dataset_name",
@@ -168,20 +173,36 @@ def build_command(record: dict, args: argparse.Namespace) -> list[str]:
         str(pct_arg(record, "pct_grassmann_rank", args.pct_grassmann_rank)),
     ]
     if "seed" in record:
-        cmd += ["--seed", str(record["seed"])]
+        common_args += ["--seed", str(record["seed"])]
     max_steps = int(record.get("max_steps", args.max_steps))
     if max_steps > 0:
-        cmd += ["--max_steps", str(max_steps)]
+        common_args += ["--max_steps", str(max_steps)]
     if args.gradient_checkpointing:
-        cmd.append("--gradient_checkpointing")
+        common_args.append("--gradient_checkpointing")
     if args.trust_remote_code:
-        cmd += ["--trust_remote_code", "true"]
-    return cmd
+        common_args += ["--trust_remote_code", "true"]
+
+    if accelerate_config is None:
+        return [args.python, "opsd_train.py", *common_args]
+
+    return [
+        args.accelerate,
+        "launch",
+        "--config_file",
+        str(accelerate_config),
+        "--num_processes",
+        str(args.num_processes),
+        "--gradient_accumulation_steps",
+        str(args.grad_accum),
+        "opsd_train.py",
+        *common_args,
+    ]
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Train every PCT run in a manifest.")
     parser.add_argument("--manifest", required=True)
+    parser.add_argument("--python", default="python3")
     parser.add_argument("--accelerate", default="accelerate")
     parser.add_argument("--accelerate_config", default="accelerate.yaml")
     parser.add_argument("--num_processes", type=int, default=8)
@@ -243,6 +264,13 @@ def main() -> None:
 
     methods = set(args.methods or [])
     run_names = set(args.run_names or [])
+    accelerate_config = resolve_accelerate_config(args.accelerate_config)
+    if accelerate_config is None:
+        print(
+            "[run_pct_train_from_manifest] accelerate.yaml not found in cwd/repo root; "
+            "falling back to `python opsd_train.py`."
+        )
+
     selected = []
     eligible_pos = 0
     selected_or_skipped = 0
@@ -272,7 +300,7 @@ def main() -> None:
         raise SystemExit("No manifest records selected for training.")
 
     for record in selected:
-        cmd = build_command(record, args)
+        cmd = build_command(record, args, accelerate_config)
         print(shell_join(cmd))
         if not args.dry_run:
             subprocess.check_call(cmd)

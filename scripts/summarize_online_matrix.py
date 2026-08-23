@@ -49,6 +49,42 @@ def main() -> None:
                 "recovery_fraction": recovery, "n": len(values),
             }
         )
+    descriptive = {}
+    for grouping, fields in {
+        "layer_mode": ("layer", "mode"),
+        "schedule_mode": ("schedule", "mode"),
+        "alpha_mode": ("alpha", "mode"),
+    }.items():
+        buckets = defaultdict(list)
+        for row in rows:
+            buckets["|".join(str(row[field]) for field in fields)].append(row["boxed_math_accuracy"])
+        descriptive[grouping] = {
+            key: {"accuracy": sum(values) / len(values), "configurations": len(values)}
+            for key, values in sorted(buckets.items())
+        }
+    indexed = {
+        (row["layer"], row["alpha"], row["schedule"], row["mode"]): row
+        for row in rows
+    }
+    selectivity = []
+    for layer in (13, 21, 23, 25):
+        for alpha in (0.25, 0.5, 0.75, 1.0):
+            for schedule in ("every1", "every2", "every4", "every8", "first8"):
+                values = {
+                    mode: indexed.get((layer, alpha, schedule, mode))
+                    for mode in ("rescue", "reverse", "random")
+                }
+                if all(values.values()):
+                    rescue = values["rescue"]["boxed_math_accuracy"]
+                    controls = max(
+                        values["reverse"]["boxed_math_accuracy"],
+                        values["random"]["boxed_math_accuracy"],
+                    )
+                    selectivity.append({
+                        "layer": layer, "alpha": alpha, "schedule": schedule,
+                        "rescue_accuracy": rescue, "strongest_control_accuracy": controls,
+                        "selectivity": rescue - controls,
+                    })
     report = {
         "baseline": baseline,
         "baseline_boxed_math_accuracy": {"correct": correct_score, "corrupt": corrupt_score},
@@ -58,6 +94,12 @@ def main() -> None:
         "missing_keys": sorted(expected_keys - observed_keys),
         "unexpected_keys": sorted(observed_keys - expected_keys),
         "results": rows,
+        "descriptive_configuration_aggregates": descriptive,
+        "selectivity": sorted(selectivity, key=lambda row: row["selectivity"], reverse=True),
+        "inference_warning": (
+            "Configuration counts are repeated interventions on one problem, not independent "
+            "samples; use PRM problem-level bootstrap results for inferential claims."
+        ),
     }
     Path(args.out).write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps(report, indent=2, ensure_ascii=False))

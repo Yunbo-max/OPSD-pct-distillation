@@ -70,6 +70,21 @@ def main() -> None:
     baseline_count = sum(jsonl_count(path) for path in baseline_paths if path.exists())
     check("prm_online_baseline_100", all(path.exists() for path in baseline_paths) and baseline_count == 100,
           baseline_count if any(path.exists() for path in baseline_paths) else "missing")
+    damaged_audit_path = root / "prm800k_online_damaged.audit.json"
+    core_summary_path = root / "prm800k_online_rescue_core_summary.json"
+    projected_summary_path = root / "prm800k_online_projected_pca16_summary.json"
+    if all(path.exists() for path in (damaged_audit_path, core_summary_path, projected_summary_path)):
+        damaged = load_json(damaged_audit_path)
+        core = load_json(core_summary_path)
+        projected = load_json(projected_summary_path)
+        expected_online = min(int(damaged.get("selected", 0)), 10)
+        check("prm_online_full_residual", expected_online > 0 and core.get("n") == expected_online,
+              {"damaged": damaged.get("selected"), "evaluated": core.get("n")})
+        check("prm_online_projected_subspace", expected_online > 0 and projected.get("n") == expected_online,
+              {"expected": expected_online, "evaluated": projected.get("n")})
+    else:
+        check("prm_online_full_residual", False, "missing")
+        check("prm_online_projected_subspace", False, "missing")
 
     decay_paths = [
         root / "residual_decay_108_l25_to_l35_shard0.jsonl",

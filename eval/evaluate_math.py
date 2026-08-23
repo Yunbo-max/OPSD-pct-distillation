@@ -186,7 +186,9 @@ def load_vllm_model(
     return llm, tokenizer
 
 
-def load_transformers_model(base_model_path: str, torch_dtype: str = "float16"):
+def load_transformers_model(
+    base_model_path: str, torch_dtype: str = "float16", lora_adapter_path: str | None = None
+):
     dtype_map = {
         "bfloat16": torch.bfloat16,
         "bf16": torch.bfloat16,
@@ -205,6 +207,14 @@ def load_transformers_model(base_model_path: str, torch_dtype: str = "float16"):
         torch_dtype=dtype,
         device_map="auto",
     )
+    if lora_adapter_path is not None:
+        adapter_path = Path(lora_adapter_path)
+        if not ((adapter_path / "adapter_model.safetensors").exists() or (adapter_path / "adapter_model.bin").exists()):
+            raise FileNotFoundError(f"No LoRA adapter weights found in {adapter_path}")
+        from peft import PeftModel
+
+        model = PeftModel.from_pretrained(model, str(adapter_path))
+        print(f"Loaded LoRA adapter with Transformers from: {adapter_path}")
     model.eval()
     return model, tokenizer
 
@@ -455,7 +465,7 @@ def evaluate_math500(
             print(f"LoRA path: {lora_request.lora_path}")
     else:
         print(f"Model dtype: {next(llm.parameters()).dtype}")
-        print("Using LoRA: False")
+        print(f"Using LoRA: {hasattr(llm, 'peft_config')}")
     print("=" * 70 + "\n")
 
     # Generate outputs
@@ -469,8 +479,6 @@ def evaluate_math500(
             torch.manual_seed(seed)
             if torch.cuda.is_available():
                 torch.cuda.manual_seed_all(seed)
-        if lora_request is not None:
-            raise ValueError("LoRA checkpoint evaluation currently requires --backend vllm.")
         outputs = []
         for prompt in tqdm(all_prompts, desc="Generating"):
             encoded = tokenizer(prompt, return_tensors="pt").to(llm.device)
@@ -841,7 +849,11 @@ def main():
             enable_thinking=args.enable_thinking,
         )
     else:
-        llm, tokenizer = load_transformers_model(args.base_model, torch_dtype=args.torch_dtype)
+        llm, tokenizer = load_transformers_model(
+            args.base_model,
+            torch_dtype=args.torch_dtype,
+            lora_adapter_path=args.checkpoint_dir,
+        )
 
     # Setup LoRA request if checkpoint is provided
     lora_request = None

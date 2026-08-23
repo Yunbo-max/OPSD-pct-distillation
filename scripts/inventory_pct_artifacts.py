@@ -8,12 +8,14 @@ from pathlib import Path
 
 
 PATTERNS = {
-    "metadata": ["run_metadata.json", "preflight.json"],
+    "metadata": ["**/run_metadata.json", "**/preflight*.json"],
     "dataset_provenance": ["**/*dataset_provenance*.json", "**/*provenance*.json"],
     "manifests": ["**/manifest*.jsonl", "**/*manifest*.jsonl"],
     "resume_plans": ["**/resume_plan.json", "**/resume_plan.md"],
     "train_states": ["**/trainer_state.json"],
-    "eval_json": ["**/*_avg12.json", "**/*_avg*.json"],
+    "eval_json": ["**/*_avg12.json", "**/*_avg*.json", "**/eval/*.json"],
+    "diagnostic_data": ["**/diagnostics/*.jsonl", "**/diagnostics/*audit*.json"],
+    "reports": ["**/*REPORT.md", "**/report.md"],
     "tables": ["**/*.tsv", "**/*.csv", "**/tables.tex", "**/report.md"],
     "figures": ["**/*.svg", "**/*.pdf", "**/*.png"],
     "artifact_checksums": ["**/*checksums*.jsonl", "**/*checksums*.json"],

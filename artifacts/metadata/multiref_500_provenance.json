@@ -1,0 +1,47 @@
+{
+  "dataset": "artifacts/diagnostics/multiref_500_verified_final.jsonl",
+  "fields": [
+    "answer",
+    "id",
+    "problem",
+    "reference_strategies",
+    "reference_valid",
+    "references",
+    "shuffled_reference",
+    "solution",
+    "wrong_reference"
+  ],
+  "hashes": {
+    "first_row_hashes": [
+      "07be4b6b6f2cbf5dac7217ce68f621fff5c214febc63f6a0ade199d25548ed88",
+      "b49b01d25f12dab6783b7e2ed84b636132ce145e529155c84561de8d439fddef",
+      "2042c8d19b26f7e9e27989245b578dd5941e4023f4241e50621f5508f179b55a"
+    ],
+    "num_hashed_rows": 500,
+    "row_hash_sha256": "d65d3cadabfa141ae257702e7709a1f42ea8dd35f750372074a81b0c2e0a09b4"
+  },
+  "num_rows": 500,
+  "problem_rows": 500,
+  "reference_stats": {
+    "duplicate_reference_rows": 0,
+    "min_refs_required": 4,
+    "reference_count_histogram": {
+      "4": 500
+    },
+    "reference_count_max": 4,
+    "reference_count_mean": 4,
+    "reference_count_min": 4,
+    "rows_with_refs": 500,
+    "rows_with_shuffled_reference": 500,
+    "rows_with_wrong_reference": 500,
+    "too_few_reference_rows": 0
+  },
+  "solution_rows": 500,
+  "source": {
+    "path": "/root/OPSD-pct-distillation/artifacts/diagnostics/multiref_500_verified_final.jsonl",
+    "sha256": "8e3789fc28e362ea47fe93fd19a812c8ed2fea1080888af573ec2b602b22e929",
+    "size_bytes": 10173653,
+    "split": "train",
+    "type": "local_json"
+  }
+}

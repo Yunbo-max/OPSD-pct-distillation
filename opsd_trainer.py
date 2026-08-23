@@ -176,6 +176,13 @@ class OPSDTrainer(SFTTrainer):
                 pct_num_references=pct_num_references,
             )
 
+        # OPSD uses a custom collator over raw problem/solution/reference fields.
+        # TRL's default SFT preparation expects a preformatted `text` column and
+        # would otherwise tokenize/drop the fields required by the collator.
+        args.dataset_kwargs = dict(args.dataset_kwargs or {})
+        args.dataset_kwargs["skip_prepare_dataset"] = True
+        args.remove_unused_columns = False
+
         super().__init__(
             model,
             args=args,

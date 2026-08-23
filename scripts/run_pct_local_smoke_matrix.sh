@@ -7,7 +7,9 @@ export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:T
 MODEL="${MODEL:-Qwen/Qwen3-0.6B}"
 MODEL_TAG="${MODEL_TAG:-qwen3_0p6b}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
-OUT_ROOT="${OUT_ROOT:-/root/OPSD/runs/local_smoke_matrix}"
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DATASET="${DATASET:-siyanzhao/Openthoughts_math_30k_opsd}"
+OUT_ROOT="${OUT_ROOT:-${REPO_ROOT}/runs/local_smoke_matrix}"
 MAX_STEPS="${MAX_STEPS:-1}"
 TRAIN_NUM_SAMPLES="${TRAIN_NUM_SAMPLES:-1}"
 MAX_COMPLETION_LENGTH="${MAX_COMPLETION_LENGTH:-8}"
@@ -43,6 +45,7 @@ for METHOD in ${METHODS}; do
     --jsd_token_clip 0.05 \
     --report_to none \
     --pct_method "${METHOD}" \
+    --pct_dataset_name "${DATASET}" \
     --pct_loss_weight "$([ "${METHOD}" = "none" ] && printf 0 || printf 0.1)" \
     --pct_num_references 4 \
     --pct_layers last \

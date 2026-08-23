@@ -11,6 +11,7 @@ from pct.losses import (
     pct_loss,
     phf_direction_loss,
     sinkhorn_plan,
+    uot_flow_loss,
 )
 
 
@@ -54,6 +55,27 @@ def test_unbalanced_ot_reports_relaxed_mass():
     assert torch.isclose(balanced_mass, torch.tensor(1.0), atol=1e-4)
     assert unbalanced_mass.item() > 0
     assert unbalanced_mass.item() != balanced_mass.item()
+
+
+def test_uot_uses_full_objective_and_reports_separate_diagnostics():
+    student = make_flow(0)
+    teacher = make_flow(1)
+    objective, raw_cost, normalized_cost, mass = uot_flow_loss(
+        student, teacher, sinkhorn_iters=20, rho=0.5
+    )
+    assert objective.ndim == 0
+    assert objective.item() >= raw_cost.item()
+    assert mass.item() > 0
+    assert torch.isclose(normalized_cost, raw_cost / mass, atol=1e-6)
+
+
+def test_set_uot_exposes_cost_quality_and_mass_metrics():
+    student = make_flow(0)
+    teachers = [make_flow(1), make_flow(2)]
+    _, metrics = pct_loss(student, teachers, method="set_uot", sinkhorn_iters=20)
+    assert metrics["pct_transport_cost_raw"] >= 0
+    assert metrics["pct_transport_cost_normalized"] >= 0
+    assert metrics["pct_transport_mass"] > 0
 
 
 def test_pairwise_structure_and_fgw_loss_are_well_formed():

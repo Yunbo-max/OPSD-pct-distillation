@@ -13,6 +13,8 @@ FIELDS = (
     "on_policy_loss",
     "off_policy_loss",
     "pct_loss",
+    "pct_transport_cost_raw",
+    "pct_transport_cost_normalized",
     "pct_transport_mass",
     "grad_norm",
     "learning_rate",

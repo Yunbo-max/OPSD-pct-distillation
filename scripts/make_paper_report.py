@@ -118,7 +118,16 @@ def main() -> None:
         (
             "Training Summary",
             args.train_tsv,
-            ["run", "step", "loss", "pct_loss", "pct_transport_mass", "grad_norm"],
+            [
+                "run",
+                "step",
+                "loss",
+                "pct_loss",
+                "pct_transport_cost_raw",
+                "pct_transport_cost_normalized",
+                "pct_transport_mass",
+                "grad_norm",
+            ],
             "Training smoke/full-run summary.",
             "tab:pct_train",
         ),

@@ -1,0 +1,47 @@
+{
+  "base_model": "/root/models/Qwen3-0.6B",
+  "dataset": "aime24",
+  "enable_thinking": false,
+  "temperature": 1.0,
+  "top_p": 0.8,
+  "top_k": -1,
+  "min_p": 0.0,
+  "presence_penalty": 0.0,
+  "seed": 123,
+  "max_new_tokens": 8,
+  "val_n": 1,
+  "num_problems": 1,
+  "total_solutions": 1,
+  "pass_at_n": 0,
+  "pass_at_n_pct": 0.0,
+  "average_at_n": 0,
+  "average_at_n_pct": 0.0,
+  "majority_vote_at_n": 0,
+  "majority_vote_at_n_pct": 0.0,
+  "formatted_count": 0,
+  "format_rate": 0.0,
+  "results": [
+    {
+      "problem_id": 60,
+      "metadata": {},
+      "problem": "Every morning Aya goes for a $9$-kilometer-long walk and stops at a coffee shop afterwards. When she walks at a constant speed of $s$ kilometers per hour, the walk takes her 4 hours, including $t$ minutes spent in the coffee shop. When she walks $s+2$ kilometers per hour, the walk takes her 2 hours and 24 minutes, including $t$ minutes spent in the coffee shop. Suppose Aya walks at $s+\\frac{1}{2}$ kilometers per hour. Find the number of minutes the walk takes her, including the $t$ minutes spent in the coffee shop.",
+      "ground_truth": "204",
+      "val_n": 1,
+      "generations": [
+        {
+          "predicted_answer": "[No boxed answer found]",
+          "full_generation": "We are given two scenarios involving Aya",
+          "correct": false,
+          "formatted": false
+        }
+      ],
+      "num_correct": 0,
+      "pass_at_n": false,
+      "majority_vote_correct": false,
+      "predicted_answer": "[No boxed answer found]",
+      "full_generation": "We are given two scenarios involving Aya",
+      "correct": false,
+      "formatted": false
+    }
+  ]
+}

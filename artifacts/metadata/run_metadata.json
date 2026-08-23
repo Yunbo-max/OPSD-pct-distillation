@@ -1,0 +1,38 @@
+{
+  "cwd": "/root/OPSD-pct-distillation",
+  "env": {
+    "CUDA_VISIBLE_DEVICES": null,
+    "HF_HOME": null,
+    "NCCL_P2P_DISABLE": null,
+    "PYTORCH_CUDA_ALLOC_CONF": null,
+    "TRANSFORMERS_CACHE": null,
+    "WANDB_MODE": null
+  },
+  "git": {
+    "branch": "main",
+    "commit": "acfa7d8a29b922631d4b9569aa31348b86c3bb76",
+    "dirty": true,
+    "inside_work_tree": true,
+    "status_short": "M eval/evaluate_math.py\n M opsd_trainer.py\n M pct/losses.py\n M scripts/make_paper_report.py\n M scripts/run_pct_local_smoke_matrix.sh\n M scripts/summarize_train_runs.py\n M tests/test_pct_losses.py\n?? artifacts/\n?? scripts/audit_multiref_pilot.py\n?? scripts/build_multiref_pilot.py\n?? scripts/repair_multiref_dataset.py\n?? scripts/run_hidden_flow_diagnostic.py\n?? scripts/summarize_hidden_flow_diagnostic.py"
+  },
+  "gpu": [
+    "NVIDIA GeForce RTX 4090, 24564 MiB, 550.54.15"
+  ],
+  "manifest": null,
+  "notes": "RTX 4090 Gate-0: UOT objective fix, 500-reference and conditioned-flow diagnostics, 0.6B training/eval smoke",
+  "packages": {
+    "accelerate": "1.11.0",
+    "datasets": "3.6.0",
+    "math-verify": "0.8.0",
+    "peft": "0.17.1",
+    "sentencepiece": "0.1.99",
+    "tiktoken": "0.9.0",
+    "torch": "2.13.0+cu126",
+    "transformers": "4.57.1",
+    "trl": "0.26.0",
+    "vllm": null,
+    "wandb": "0.22.3"
+  },
+  "platform": "Linux-6.5.0-35-generic-x86_64-with-glibc2.35",
+  "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]"
+}

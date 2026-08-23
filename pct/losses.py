@@ -190,6 +190,71 @@ def ot_flow_loss(
     return torch.stack(losses).mean(), torch.stack(masses).mean()
 
 
+def generalized_kl(x: torch.Tensor, y: torch.Tensor, eps: float = 1e-12) -> torch.Tensor:
+    """Generalized KL divergence for non-negative, not necessarily normalized measures."""
+    safe_x = x.clamp_min(eps)
+    safe_y = y.clamp_min(eps)
+    return (x * (safe_x.log() - safe_y.log()) - x + y).sum()
+
+
+def uot_flow_loss(
+    student: Flow,
+    teacher: Flow,
+    max_atoms: int = 64,
+    epsilon: float = 0.05,
+    sinkhorn_iters: int = 40,
+    rho: float = 0.5,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    """Full entropic UOT objective plus interpretable transport diagnostics.
+
+    Returns ``(objective, raw_transport_cost, normalized_transport_cost, mass)``.
+    The objective includes the coupling entropy and both relaxed-marginal KL
+    penalties, so reducing transported mass cannot lower the training loss for
+    free. The normalized cost and mass are diagnostics and are not optimized
+    independently.
+    """
+    objectives = []
+    raw_costs = []
+    masses = []
+    for batch_idx in range(student.z.shape[0]):
+        zs = _flow_atoms(student, batch_idx, max_atoms=max_atoms)
+        zt = _flow_atoms(teacher, batch_idx, max_atoms=max_atoms).detach()
+        if zs.numel() == 0 or zt.numel() == 0:
+            continue
+
+        cost = 1.0 - zs @ zt.T
+        plan = sinkhorn_plan(
+            cost,
+            epsilon=epsilon,
+            n_iters=sinkhorn_iters,
+            unbalanced=True,
+            rho=rho,
+        )
+        a = zs.new_full((zs.shape[0],), 1.0 / zs.shape[0])
+        b = zs.new_full((zt.shape[0],), 1.0 / zt.shape[0])
+        reference = a[:, None] * b[None, :]
+        raw_cost = (plan * cost).sum()
+        mass = plan.sum()
+        objective = (
+            raw_cost
+            + epsilon * generalized_kl(plan, reference)
+            + rho * generalized_kl(plan.sum(dim=1), a)
+            + rho * generalized_kl(plan.sum(dim=0), b)
+        )
+
+        objectives.append(objective)
+        raw_costs.append(raw_cost.detach())
+        masses.append(mass.detach())
+
+    if not objectives:
+        zero = student.z.new_tensor(0.0)
+        return zero, zero, zero, zero
+    mean_raw_cost = torch.stack(raw_costs).mean()
+    mean_mass = torch.stack(masses).mean()
+    normalized_cost = mean_raw_cost / mean_mass.clamp_min(1e-12)
+    return torch.stack(objectives).mean(), mean_raw_cost, normalized_cost, mean_mass
+
+
 def pairwise_structure(z: torch.Tensor) -> torch.Tensor:
     return (1.0 - z @ z.T).clamp_min(0.0)
 
@@ -269,24 +334,41 @@ def pct_loss(
     elif method == "phf_set":
         loss = set_phf_loss(student, teachers, tau=tau, geometry_weight=geometry_weight)
     elif method in {"set_ot", "set_uot"}:
-        use_uot = method == "set_uot"
         vals = []
+        raw_costs = []
+        normalized_costs = []
         masses = []
         for teacher in teachers:
-            val, mass = ot_flow_loss(
-                student,
-                teacher,
-                max_atoms=max_atoms,
-                epsilon=sinkhorn_epsilon,
-                sinkhorn_iters=sinkhorn_iters,
-                unbalanced=use_uot,
-                rho=uot_rho,
-            )
+            if method == "set_uot":
+                val, raw_cost, normalized_cost, mass = uot_flow_loss(
+                    student,
+                    teacher,
+                    max_atoms=max_atoms,
+                    epsilon=sinkhorn_epsilon,
+                    sinkhorn_iters=sinkhorn_iters,
+                    rho=uot_rho,
+                )
+            else:
+                val, mass = ot_flow_loss(
+                    student,
+                    teacher,
+                    max_atoms=max_atoms,
+                    epsilon=sinkhorn_epsilon,
+                    sinkhorn_iters=sinkhorn_iters,
+                )
+                raw_cost = val.detach()
+                normalized_cost = raw_cost / mass.clamp_min(1e-12)
             vals.append(val)
+            raw_costs.append(raw_cost)
+            normalized_costs.append(normalized_cost)
             masses.append(mass)
         losses = torch.stack(vals)
         loss = -tau * torch.logsumexp(-losses / tau, dim=0) + tau * torch.log(
             torch.tensor(float(len(teachers)), device=losses.device)
+        )
+        metrics["pct_transport_cost_raw"] = float(torch.stack(raw_costs).mean().detach().cpu())
+        metrics["pct_transport_cost_normalized"] = float(
+            torch.stack(normalized_costs).mean().detach().cpu()
         )
         metrics["pct_transport_mass"] = float(torch.stack(masses).mean().detach().cpu())
     elif method == "set_fgw":

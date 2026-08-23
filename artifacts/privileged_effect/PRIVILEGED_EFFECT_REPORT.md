@@ -77,3 +77,41 @@ Because those controls also caused no significant behavioral damage, the working
    projected interventions on held-out problems.
 
 Formal distillation should begin only if the short-window or held-out-subspace gates pass.
+
+## Follow-up: effect size, temporal support, and held-out structure
+
+The per-example analysis pools all 324 matched pairs (108 problems times three corruption
+categories). At layer 25, total behavioral damage strongly predicts both rescue and necessity:
+
+- Pearson `TE -> rescue = 0.858` and `TE -> -necessity = 0.902`;
+- after controlling for corruption category, standardized damage coefficients are `0.696`
+  (95% CI `[0.549, 0.793]`) for rescue and `0.697` (`[0.611, 0.742]`) for necessity.
+
+The association rises across depth and is therefore not explained only by the discrete corruption
+label. This supports the narrower claim that the residual tracks behavioral consequence.
+
+Short-window teacher-forced patches do **not** rescue behavior. At layer 25, windows 1 and 4 are
+approximately null; windows 8, 16, and 32 move significantly in the wrong direction. Only the
+full 128-token intervention yields positive rescue (`+0.01356`) and negative necessity
+(`-0.01643`). The current evidence therefore rejects a one-shot static correction vector and
+motivates an online, prefix-matched, time-varying residual field.
+
+On a fixed problem-level 70/30 split, the full held-out residual remains causal (`n=33`, rescue
+`+0.01705`, 95% CI `[0.00583, 0.02941]`; necessity `-0.01840`,
+`[-0.03058, -0.00716]`). A train-only PCA rank-16 projection preserves `+0.00717` rescue and
+`-0.00684` necessity, about 42% and 37% of the full effects respectively. The proposed
+active-versus-inert generalized eigenspace does not show stable held-out rescue and is therefore
+a negative result, not a selected method.
+
+Separable functional PCA further distinguishes spatial compression from temporal compression.
+After subtracting the train-set time-varying mean, one hidden-space component explains about 95%
+of held-out energy only when all 128 learned time functions are retained. One time function plus
+one spatial direction explains only 0.8%; 32 time functions explain about 69%, and 64 explain about
+90%. Thus the large shared spatial component does not imply a static, temporally transferable
+steering direction. Linear one-step dynamics also fit poorly (`R^2 = 0.0094`), while the low raw
+Hankel rank is dominated by the same nuisance component.
+
+The decisive remaining gate is online autoregressive intervention with residuals recomputed on
+the arm's actual prefix, evaluated by mathematical boxed-answer equivalence. Correct, corrupt,
+rescue, sign-reversed, and norm-matched-random arms plus layer/alpha/refresh sweeps are running;
+PRM800K paired-step validation and residual-persistence estimation follow automatically.

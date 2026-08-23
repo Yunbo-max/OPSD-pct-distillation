@@ -1,0 +1,158 @@
+{
+  "n_problems": 108,
+  "layers": {
+    "9": {
+      "n_pairs": 324,
+      "pearson_te_rescue": 0.17752379053363118,
+      "spearman_te_rescue": 0.1294632024528616,
+      "pearson_te_necessity": 0.3358187958476135,
+      "spearman_te_necessity": 0.20799287872271438,
+      "category_adjusted_beta_te_rescue": 0.06600144770600742,
+      "category_adjusted_beta_te_rescue_ci": [
+        0.012525748208261763,
+        0.09288309116284499
+      ],
+      "category_adjusted_beta_te_necessity": 0.11180860597857757,
+      "category_adjusted_beta_te_necessity_ci": [
+        0.026883031415078456,
+        0.22642058409805063
+      ]
+    },
+    "11": {
+      "n_pairs": 324,
+      "pearson_te_rescue": 0.18933040362431505,
+      "spearman_te_rescue": 0.13866874029530155,
+      "pearson_te_necessity": 0.37644727933732103,
+      "spearman_te_necessity": 0.2301752481985998,
+      "category_adjusted_beta_te_rescue": 0.07059416664804984,
+      "category_adjusted_beta_te_rescue_ci": [
+        0.026332509637078148,
+        0.0961064719575471
+      ],
+      "category_adjusted_beta_te_necessity": 0.13695178472590264,
+      "category_adjusted_beta_te_necessity_ci": [
+        0.03860146166500224,
+        0.28561041409625254
+      ]
+    },
+    "13": {
+      "n_pairs": 324,
+      "pearson_te_rescue": 0.4288132361630891,
+      "spearman_te_rescue": 0.291107964759133,
+      "pearson_te_necessity": 0.6001563421126933,
+      "spearman_te_necessity": 0.39231978853503996,
+      "category_adjusted_beta_te_rescue": 0.17445957240177984,
+      "category_adjusted_beta_te_rescue_ci": [
+        0.11690949421088898,
+        0.23457027478934878
+      ],
+      "category_adjusted_beta_te_necessity": 0.2527117343368227,
+      "category_adjusted_beta_te_necessity_ci": [
+        0.1489735050896481,
+        0.41163908863770393
+      ]
+    },
+    "15": {
+      "n_pairs": 324,
+      "pearson_te_rescue": 0.4074833021043223,
+      "spearman_te_rescue": 0.3131975431169983,
+      "pearson_te_necessity": 0.6277213077720809,
+      "spearman_te_necessity": 0.4455515479357857,
+      "category_adjusted_beta_te_rescue": 0.18034404616064229,
+      "category_adjusted_beta_te_rescue_ci": [
+        0.12040048949478893,
+        0.25542127650202007
+      ],
+      "category_adjusted_beta_te_necessity": 0.2941386271131544,
+      "category_adjusted_beta_te_necessity_ci": [
+        0.17734322638324884,
+        0.4875162236938166
+      ]
+    },
+    "17": {
+      "n_pairs": 324,
+      "pearson_te_rescue": 0.4582861718284563,
+      "spearman_te_rescue": 0.4077061788652881,
+      "pearson_te_necessity": 0.6635773680233688,
+      "spearman_te_necessity": 0.4872895573299162,
+      "category_adjusted_beta_te_rescue": 0.2184817467414483,
+      "category_adjusted_beta_te_rescue_ci": [
+        0.150163811522598,
+        0.3084983525579368
+      ],
+      "category_adjusted_beta_te_necessity": 0.3319111394687868,
+      "category_adjusted_beta_te_necessity_ci": [
+        0.2191478827224368,
+        0.5186844650942951
+      ]
+    },
+    "19": {
+      "n_pairs": 324,
+      "pearson_te_rescue": 0.45050386952369953,
+      "spearman_te_rescue": 0.4308753801172273,
+      "pearson_te_necessity": 0.7244712302288184,
+      "spearman_te_necessity": 0.5566422740104074,
+      "category_adjusted_beta_te_rescue": 0.21316289251466586,
+      "category_adjusted_beta_te_rescue_ci": [
+        0.15239012473839858,
+        0.32467259178550006
+      ],
+      "category_adjusted_beta_te_necessity": 0.3959310523200487,
+      "category_adjusted_beta_te_necessity_ci": [
+        0.2939020263478751,
+        0.5517606209790032
+      ]
+    },
+    "21": {
+      "n_pairs": 324,
+      "pearson_te_rescue": 0.6379380908316301,
+      "spearman_te_rescue": 0.5365881023440165,
+      "pearson_te_necessity": 0.7798872957018719,
+      "spearman_te_necessity": 0.640734312920581,
+      "category_adjusted_beta_te_rescue": 0.3477325809263206,
+      "category_adjusted_beta_te_rescue_ci": [
+        0.2809147799108727,
+        0.47605457121425476
+      ],
+      "category_adjusted_beta_te_necessity": 0.4643819907308724,
+      "category_adjusted_beta_te_necessity_ci": [
+        0.3771997596481184,
+        0.59852987973555
+      ]
+    },
+    "23": {
+      "n_pairs": 324,
+      "pearson_te_rescue": 0.8101530141211697,
+      "spearman_te_rescue": 0.5917441307853762,
+      "pearson_te_necessity": 0.832511629653572,
+      "spearman_te_necessity": 0.6873080449899324,
+      "category_adjusted_beta_te_rescue": 0.528726480636513,
+      "category_adjusted_beta_te_rescue_ci": [
+        0.4152269908577034,
+        0.6004519374115659
+      ],
+      "category_adjusted_beta_te_necessity": 0.5285703759604833,
+      "category_adjusted_beta_te_necessity_ci": [
+        0.4418412338621402,
+        0.6586319314796717
+      ]
+    },
+    "25": {
+      "n_pairs": 324,
+      "pearson_te_rescue": 0.8583875051855424,
+      "spearman_te_rescue": 0.6380613642129003,
+      "pearson_te_necessity": 0.9023683604197132,
+      "spearman_te_necessity": 0.7098148931698085,
+      "category_adjusted_beta_te_rescue": 0.6963480668440903,
+      "category_adjusted_beta_te_rescue_ci": [
+        0.5486848841659205,
+        0.7927904235380234
+      ],
+      "category_adjusted_beta_te_necessity": 0.6972432484849292,
+      "category_adjusted_beta_te_necessity_ci": [
+        0.6111463234955721,
+        0.7419015568913833
+      ]
+    }
+  }
+}

@@ -25,12 +25,15 @@ def interval(values: np.ndarray, indices: np.ndarray) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("input")
+    parser.add_argument("inputs", nargs="+")
     parser.add_argument("--out", required=True)
     parser.add_argument("--bootstrap", type=int, default=5000)
     parser.add_argument("--seed", type=int, default=101)
     args = parser.parse_args()
-    rows = [json.loads(line) for line in Path(args.input).read_text().splitlines() if line]
+    rows = [
+        json.loads(line) for source in args.inputs
+        for line in Path(source).read_text().splitlines() if line
+    ]
     if not rows:
         Path(args.out).write_text(json.dumps({"n": 0, "results": {}}, indent=2) + "\n")
         return

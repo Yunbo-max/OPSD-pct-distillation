@@ -77,10 +77,16 @@ def main() -> None:
     parser.add_argument("--windows", default="128")
     parser.add_argument("--controls", default="all")
     parser.add_argument("--seed", type=int, default=67)
+    parser.add_argument("--shard_count", type=int, default=1)
+    parser.add_argument("--shard_index", type=int, default=0)
     args = parser.parse_args()
 
     rows = [json.loads(line) for line in Path(args.dataset).read_text().splitlines() if line]
     rows = rows[: args.n_examples]
+    rows = [
+        row for index, row in enumerate(rows)
+        if index % args.shard_count == args.shard_index
+    ]
     output = Path(args.out)
     output.parent.mkdir(parents=True, exist_ok=True)
     completed = sum(1 for line in output.read_text().splitlines() if line) if output.exists() else 0
@@ -130,7 +136,7 @@ def main() -> None:
                 for layer in layers:
                     residual = correct_states[layer] - control_states[layer]
                     generator = torch.Generator(device="cpu").manual_seed(
-                        args.seed + position * 1009 + layer * 17 + control_index
+                        args.seed + args.shard_index * 1000003 + position * 1009 + layer * 17 + control_index
                     )
                     random = torch.randn(residual.shape, generator=generator)
                     random = F.normalize(random, dim=-1) * residual.norm(dim=-1, keepdim=True)

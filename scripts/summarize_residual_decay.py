@@ -11,10 +11,13 @@ import numpy as np
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("input")
+    parser.add_argument("inputs", nargs="+")
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
-    rows = [json.loads(line) for line in Path(args.input).read_text().splitlines() if line]
+    rows = [
+        json.loads(line) for source in args.inputs
+        for line in Path(source).read_text().splitlines() if line
+    ]
     grouped = defaultdict(list)
     for row in rows:
         for values in row["curves"].values():

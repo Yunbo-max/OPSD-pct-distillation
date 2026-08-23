@@ -59,9 +59,15 @@ def main() -> None:
     parser.add_argument("--origins", default="0,8,16,32,64,96")
     parser.add_argument("--seed", type=int, default=97)
     parser.add_argument("--random_control", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--shard_count", type=int, default=1)
+    parser.add_argument("--shard_index", type=int, default=0)
     args = parser.parse_args()
-    rows = [json.loads(line) for line in Path(args.dataset).read_text().splitlines() if line][
+    all_rows = [json.loads(line) for line in Path(args.dataset).read_text().splitlines() if line][
         : args.n_examples
+    ]
+    rows = [
+        row for index, row in enumerate(all_rows)
+        if index % args.shard_count == args.shard_index
     ]
     origins = [int(value) for value in args.origins.split(",")]
     output = Path(args.out)
@@ -102,7 +108,7 @@ def main() -> None:
                 random_effect = None
                 if args.random_control:
                     generator = torch.Generator().manual_seed(
-                        args.seed + position * 1009 + origin
+                        args.seed + args.shard_index * 1000003 + position * 1009 + origin
                     )
                     residual = inject_residual[:, origin, :]
                     random = torch.randn(residual.shape, generator=generator)

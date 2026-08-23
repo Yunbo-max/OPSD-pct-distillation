@@ -194,6 +194,8 @@ def main() -> None:
     parser.add_argument("--projection_basis", default=None)
     parser.add_argument("--projection_kind", choices=("pca", "contrastive"), default="pca")
     parser.add_argument("--projection_rank", type=int, default=None)
+    parser.add_argument("--shard_count", type=int, default=1)
+    parser.add_argument("--shard_index", type=int, default=0)
     args = parser.parse_args()
 
     rows = [json.loads(line) for line in Path(args.dataset).read_text().splitlines() if line]
@@ -202,8 +204,13 @@ def main() -> None:
         rows = [row for row in rows if str(row.get("id")) in selected_ids]
     else:
         rows = rows[: args.n_examples]
+    rows = [
+        row for index, row in enumerate(rows)
+        if index % args.shard_count == args.shard_index
+    ]
     output = Path(args.out)
     output.parent.mkdir(parents=True, exist_ok=True)
+    output.touch(exist_ok=True)
     completed = sum(1 for line in output.read_text().splitlines() if line) if output.exists() else 0
     if completed >= len(rows):
         print(f"already complete: {completed} rows")

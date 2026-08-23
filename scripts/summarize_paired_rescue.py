@@ -12,12 +12,15 @@ import numpy as np
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("input")
+    parser.add_argument("inputs", nargs="+")
     parser.add_argument("--out", required=True)
     parser.add_argument("--bootstrap", type=int, default=2000)
     parser.add_argument("--seed", type=int, default=71)
     args = parser.parse_args()
-    rows = [json.loads(line) for line in Path(args.input).read_text().splitlines() if line]
+    rows = [
+        json.loads(line) for source in args.inputs
+        for line in Path(source).read_text().splitlines() if line
+    ]
     values = defaultdict(list)
     for row in rows:
         for layer, interventions in row["layers"].items():

@@ -67,14 +67,14 @@ python3 scripts/run_online_paired_residual.py \
   artifacts/privileged_effect/prm800k_paired_steps_100.jsonl \
   --out artifacts/privileged_effect/prm800k_online_baseline_100_shard0.jsonl \
   --n_examples 100 --layers 25 --alphas 1 \
-  --schedules every1 --modes none --max_new_tokens 512 \
+  --schedules every1 --modes none --max_new_tokens 1024 \
   --shard_count 2 --shard_index 0 &
 prm_online_worker_0=$!
 python3 scripts/run_online_paired_residual.py \
   artifacts/privileged_effect/prm800k_paired_steps_100.jsonl \
   --out artifacts/privileged_effect/prm800k_online_baseline_100_shard1.jsonl \
   --n_examples 100 --layers 25 --alphas 1 \
-  --schedules every1 --modes none --max_new_tokens 512 \
+  --schedules every1 --modes none --max_new_tokens 1024 \
   --shard_count 2 --shard_index 1 &
 prm_online_worker_1=$!
 wait "$prm_online_worker_0"
@@ -88,14 +88,14 @@ python3 scripts/run_online_paired_residual.py \
   artifacts/privileged_effect/prm800k_online_damaged.jsonl \
   --out artifacts/privileged_effect/prm800k_online_rescue_core_shard0.jsonl \
   --n_examples 10 --layers 13,21,23,25 --alphas 0.25,0.5,1 \
-  --schedules every1 --modes rescue,reverse,random --max_new_tokens 512 \
+  --schedules every1 --modes rescue,reverse,random --max_new_tokens 1024 \
   --shard_count 2 --shard_index 0 &
 prm_core_worker_0=$!
 python3 scripts/run_online_paired_residual.py \
   artifacts/privileged_effect/prm800k_online_damaged.jsonl \
   --out artifacts/privileged_effect/prm800k_online_rescue_core_shard1.jsonl \
   --n_examples 10 --layers 13,21,23,25 --alphas 0.25,0.5,1 \
-  --schedules every1 --modes rescue,reverse,random --max_new_tokens 512 \
+  --schedules every1 --modes rescue,reverse,random --max_new_tokens 1024 \
   --shard_count 2 --shard_index 1 &
 prm_core_worker_1=$!
 wait "$prm_core_worker_0"
@@ -109,7 +109,7 @@ python3 scripts/run_online_paired_residual.py \
   artifacts/privileged_effect/prm800k_online_damaged.jsonl \
   --out artifacts/privileged_effect/prm800k_online_projected_pca16_shard0.jsonl \
   --n_examples 10 --layers 25 --alphas 0.5,1 --schedules every1 \
-  --modes rescue,reverse,random --max_new_tokens 512 \
+  --modes rescue,reverse,random --max_new_tokens 1024 \
   --projection_basis artifacts/privileged_effect/residual_dynamics_contrastive_layer25.basis.pt \
   --projection_kind pca --projection_rank 16 --shard_count 2 --shard_index 0 &
 prm_projected_worker_0=$!
@@ -117,7 +117,7 @@ python3 scripts/run_online_paired_residual.py \
   artifacts/privileged_effect/prm800k_online_damaged.jsonl \
   --out artifacts/privileged_effect/prm800k_online_projected_pca16_shard1.jsonl \
   --n_examples 10 --layers 25 --alphas 0.5,1 --schedules every1 \
-  --modes rescue,reverse,random --max_new_tokens 512 \
+  --modes rescue,reverse,random --max_new_tokens 1024 \
   --projection_basis artifacts/privileged_effect/residual_dynamics_contrastive_layer25.basis.pt \
   --projection_kind pca --projection_rank 16 --shard_count 2 --shard_index 1 &
 prm_projected_worker_1=$!

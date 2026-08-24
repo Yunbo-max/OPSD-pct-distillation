@@ -6,6 +6,7 @@ from pct.rcip import (
     sampled_compatibility,
     sampled_reward_direction,
     robust_fisher_cone_projection,
+    node_value_i_projection,
 )
 
 
@@ -70,3 +71,24 @@ def test_robust_fisher_projects_conflict_into_cone():
     assert metrics["robust_margin"] >= -2e-5
     assert metrics["fisher_distortion"] > 0
     assert torch.isfinite(tangent).all()
+
+
+def test_nvip_leaves_helpful_teacher_unchanged():
+    p = torch.tensor([[0.5, 0.3, 0.2]])
+    q = torch.tensor([[0.7, 0.2, 0.1]])
+    values = torch.tensor([[1.0, 0.4, 0.0]])
+    projected, lmbda, metrics = node_value_i_projection(p, q, values)
+    assert torch.equal(projected, q)
+    assert lmbda.item() == 0
+    assert not metrics["repaired"].item()
+
+
+def test_nvip_minimally_repairs_harmful_teacher_to_student_value():
+    p = torch.tensor([[0.5, 0.3, 0.2]])
+    q = torch.tensor([[0.1, 0.3, 0.6]])
+    values = torch.tensor([[1.0, 0.4, 0.0]])
+    projected, lmbda, metrics = node_value_i_projection(p, q, values)
+    assert lmbda.item() > 0
+    assert metrics["repair_kl"].item() > 0
+    assert torch.allclose(metrics["projected_value"], metrics["student_value"], atol=1e-6)
+    assert torch.allclose(projected.sum(-1), torch.ones(1), atol=1e-7)

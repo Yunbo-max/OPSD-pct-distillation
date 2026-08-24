@@ -190,3 +190,68 @@ def robust_fisher_cone_projection(
         "dual_norm": dual.norm(),
     }
     return q_star.to(teacher_probs.dtype), tangent.to(teacher_probs.dtype), diagnostics
+
+
+def node_value_i_projection(
+    student_probs: torch.Tensor,
+    teacher_probs: torch.Tensor,
+    action_values: torch.Tensor,
+    *,
+    iterations: int = 64,
+    tolerance: float = 1e-7,
+) -> tuple[torch.Tensor, torch.Tensor, dict[str, torch.Tensor]]:
+    """KL-project q onto distributions whose estimated node value is at least V(p).
+
+    The solution is `q_star(a) ∝ q(a) exp(lambda Q(a))`; lambda is zero for
+    already-safe rows and otherwise found by a scalar monotone root solve.
+    """
+    if not (student_probs.shape == teacher_probs.shape == action_values.shape):
+        raise ValueError("student, teacher, and action values must have identical shapes")
+    shape = student_probs.shape
+    vocab = shape[-1]
+    p = student_probs.reshape(-1, vocab).float()
+    q = teacher_probs.reshape(-1, vocab).float()
+    values = action_values.reshape(-1, vocab).float()
+    p = p / p.sum(-1, keepdim=True)
+    q = q / q.sum(-1, keepdim=True)
+    student_value = (p * values).sum(-1)
+    teacher_value = (q * values).sum(-1)
+    active = teacher_value < student_value - tolerance
+    # Scaling Q only rescales lambda and greatly improves bisection conditioning.
+    scale = (values.amax(-1, keepdim=True) - values.amin(-1, keepdim=True)).clamp_min(1e-8)
+    normalized = values / scale
+    target = student_value / scale.squeeze(-1)
+    log_q = q.clamp_min(torch.finfo(torch.float32).tiny).log()
+
+    def tilted(lmbda: torch.Tensor) -> torch.Tensor:
+        return torch.softmax(log_q + lmbda.unsqueeze(-1) * normalized, -1)
+
+    low = torch.zeros_like(target); high = torch.ones_like(target)
+    for _ in range(32):
+        proposal = tilted(high)
+        insufficient = active & ((proposal * normalized).sum(-1) < target)
+        if not bool(insufficient.any()):
+            break
+        high = torch.where(insufficient, high * 2, high)
+    for _ in range(iterations):
+        middle = (low + high) / 2
+        below = (tilted(middle) * normalized).sum(-1) < target
+        low = torch.where(active & below, middle, low)
+        high = torch.where(active & below, high, middle)
+    lambda_normalized = torch.where(active, high, torch.zeros_like(high))
+    projected = tilted(lambda_normalized)
+    projected = torch.where(active.unsqueeze(-1), projected, q)
+    projected_value = (projected * values).sum(-1)
+    kl_to_teacher = (projected * (
+        projected.clamp_min(1e-30).log() - q.clamp_min(1e-30).log()
+    )).sum(-1)
+    diagnostics = {
+        "student_value": student_value.reshape(shape[:-1]),
+        "teacher_value": teacher_value.reshape(shape[:-1]),
+        "projected_value": projected_value.reshape(shape[:-1]),
+        "teacher_advantage": (teacher_value - student_value).reshape(shape[:-1]),
+        "repair_kl": kl_to_teacher.reshape(shape[:-1]),
+        "repaired": active.reshape(shape[:-1]),
+    }
+    lambda_original = (lambda_normalized / scale.squeeze(-1)).reshape(shape[:-1])
+    return projected.reshape(shape).to(teacher_probs.dtype), lambda_original, diagnostics

@@ -11,3 +11,4 @@ artifacts/privileged_effect/predictable_field_qwen3_4b_*/
 
 # Resume-safe per-problem RCIP rollout caches; summaries stay trackable.
 artifacts/rcip/*/
+artifacts/nvip/*/

@@ -158,7 +158,9 @@ def main() -> None:
             "completion_ids": completions.cpu(), "valid_mask": valid.cpu(),
             "texts": texts, "boxed": [boxed(text) for text in texts],
             "rewards": rewards.cpu(), "advantages": advantages.cpu(),
-            "chi": torch.cat(chi_parts, 1).to(torch.float16),
+            # Compatibility values are often 1e-7--1e-4; FP16 storage changes
+            # their rank/sign through quantization and invalidates AUROC.
+            "chi": torch.cat(chi_parts, 1).to(torch.float32),
             "sample_alignment": torch.cat(align_parts, 1).to(torch.float16),
             "student_sampled_prob": torch.cat(py_parts, 1).to(torch.float16),
             "teacher_sampled_prob": torch.cat(qy_parts, 1).to(torch.float16),

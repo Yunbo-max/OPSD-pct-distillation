@@ -237,3 +237,49 @@ gold answer is `5/16`. Because the transported oracle itself fails, no meaningfu
 recovery retention can be computed on this sample. Together with the complete 91-problem
 teacher-forced intervention, this pilot is sufficient to stop the proposed RRR/CCA expansion rather
 than launch a selectively screened free-generation matrix.
+
+## Jacobian effect transport gate
+
+The next diagnostic asks whether a privileged contrast should be transported through output space
+rather than copied as a hidden vector. For one held-out next-token decision per problem, the source
+finite effect is defined by actually patching `c = h+ - h-` at the corrupt-conditioned layer state.
+Its outcome space contains the gold token plus the 15 logits with largest absolute source change.
+At the student base point, a rank-16 explicit Jacobian and dual ridge solve produce the minimum-norm
+local intervention that reconstructs this finite source effect. Ridge damping `0.01` was selected on
+50 validation problems and then frozen for all 91 test problems. Layers 23 and 25 were evaluated.
+
+The local geometry is real and the inverse solve works. Source linearization has mean cosine
+`0.9750` at layer 23 and `0.9688` at layer 25 with the finite source effect. Applying the same vector
+through the student Jacobian lowers cosine to `0.9492/0.9564` and raises relative squared error from
+`0.1177/0.0947` to `0.2081/0.1615`; the paired gaps exclude zero. Nonlinear direct transport obtains
+effect cosine `0.9101/0.9339`, whereas Jacobian transport obtains `0.9884/0.9916` and lowers relative
+squared error from `0.2299/0.1737` to `0.0437/0.0284`. The transported intervention uses only about
+`24.9%/24.6%` of the direct residual norm.
+
+Outcome results require stratification because the privileged source intervention itself improves
+the selected gold token on only 33/91 layer-23 examples and 31/91 layer-25 examples, harms it on
+25/30, and is inert on 33/30. On the pre-specified source-positive stratum, Jacobian transport gives
+gold-log-prob gains of `+0.1097` (95% CI `[0.0194,0.2578]`) at layer 23 and `+0.1115`
+(`[0.0199,0.2516]`) at layer 25. Sign-reversed effects are `-0.2458/-0.2594`, while norm-matched
+random effects are approximately zero. The transported intervention therefore reproduces both the
+direction and task consequence of an oracle source effect.
+
+However, this does **not** pass the proposed method gate. Direct residual transport on the same
+source-positive examples is already positive: `+0.1058` at layer 23 and `+0.1345` at layer 25.
+Jacobian-minus-direct is `+0.0039` (`[-0.0386,0.0383]`) and `-0.0230`
+(`[-0.0901,0.0219]`), respectively. Across all 91 examples, Jacobian gains are only
+`+0.0243/+0.0212`, with both confidence intervals crossing zero. Source-positive membership also
+requires privileged information and cannot serve as a deployment-time gate.
+
+### Jacobian-transport decision
+
+- Base-point dependence in local effect geometry: **confirmed**, but modest.
+- Low-dimensional Jacobian reconstruction of a source effect: **GO as a mechanism diagnostic**.
+- Jacobian transport uniquely rescues cases where direct transport fails: **not established**.
+- Reference-free/free-generation method gate: **NO-GO**; not run after the teacher-forced gate.
+
+The precise conclusion is therefore narrower than “privileged effects are transportable.” A local
+inverse can faithfully reproduce a specified source logit effect with a smaller student intervention,
+but this experiment does not show a correctness benefit beyond direct patching, and the desired
+effect remains privileged and outcome-selected. This is useful evidence about model geometry, not
+yet a deployable distillation target.

@@ -1,0 +1,708 @@
+{
+  "n_baseline": 100,
+  "n_damaged": 5,
+  "n_reverse": 4,
+  "selected": 5,
+  "records": [
+    {
+      "id": "prm-1-9",
+      "correct_exact_match": true,
+      "corrupt_exact_match": false,
+      "damaged": true,
+      "reverse": false
+    },
+    {
+      "id": "prm-4-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-7-1",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-10-1",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-12-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-14-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-17-19",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-21-6",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-25-8",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-30-3",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-32-5",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-36-2",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-38-1",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-41-7",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-43-3",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-46-4",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-48-9",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-50-12",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-53-5",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-55-4",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-60-4",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-64-4",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-66-0",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-70-3",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-72-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": false,
+      "damaged": true,
+      "reverse": false
+    },
+    {
+      "id": "prm-74-8",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-76-3",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-79-4",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-81-2",
+      "correct_exact_match": false,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": true
+    },
+    {
+      "id": "prm-85-7",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-87-1",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-90-3",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-92-9",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-94-34",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-96-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": false,
+      "damaged": true,
+      "reverse": false
+    },
+    {
+      "id": "prm-101-2",
+      "correct_exact_match": false,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": true
+    },
+    {
+      "id": "prm-105-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-107-9",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-109-20",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-113-0",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-116-0",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-120-8",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-123-1",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-125-13",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-127-6",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-129-7",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-132-3",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-134-3",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-136-3",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-138-0",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-2-1",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-6-7",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-9-0",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-11-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-13-4",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-15-11",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-19-11",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-24-1",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-26-0",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-31-6",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-34-4",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-37-3",
+      "correct_exact_match": false,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": true
+    },
+    {
+      "id": "prm-40-0",
+      "correct_exact_match": true,
+      "corrupt_exact_match": false,
+      "damaged": true,
+      "reverse": false
+    },
+    {
+      "id": "prm-42-1",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-45-1",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-47-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-49-6",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-51-0",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-54-3",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-58-1",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-61-0",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-65-12",
+      "correct_exact_match": false,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": true
+    },
+    {
+      "id": "prm-68-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-71-0",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-73-1",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-75-0",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-78-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-80-8",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-82-2",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-86-13",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-88-8",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-91-8",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-93-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-95-3",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-97-8",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-103-0",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-106-2",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-108-3",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-110-0",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-115-1",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-117-3",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-122-7",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-124-0",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-126-4",
+      "correct_exact_match": true,
+      "corrupt_exact_match": false,
+      "damaged": true,
+      "reverse": false
+    },
+    {
+      "id": "prm-128-4",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-131-0",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-133-7",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-135-6",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-137-5",
+      "correct_exact_match": false,
+      "corrupt_exact_match": false,
+      "damaged": false,
+      "reverse": false
+    },
+    {
+      "id": "prm-140-0",
+      "correct_exact_match": true,
+      "corrupt_exact_match": true,
+      "damaged": false,
+      "reverse": false
+    }
+  ]
+}

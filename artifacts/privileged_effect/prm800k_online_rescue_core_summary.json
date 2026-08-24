@@ -1,0 +1,894 @@
+{
+  "n": 5,
+  "baseline": {
+    "correct_accuracy": {
+      "mean": 1.0,
+      "ci": [
+        1.0,
+        1.0
+      ]
+    },
+    "corrupt_accuracy": {
+      "mean": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "total_effect": {
+      "mean": 1.0,
+      "ci": [
+        1.0,
+        1.0
+      ]
+    },
+    "n_damaged": 5,
+    "n_reverse": 0
+  },
+  "results": {
+    "layer=13:alpha=0.25:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      }
+    },
+    "layer=13:alpha=0.25:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=13:alpha=0.25:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=13:alpha=0.5:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      }
+    },
+    "layer=13:alpha=0.5:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      }
+    },
+    "layer=13:alpha=0.5:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=13:alpha=1:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=13:alpha=1:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=13:alpha=1:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      }
+    },
+    "layer=21:alpha=0.25:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "layer=21:alpha=0.25:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      }
+    },
+    "layer=21:alpha=0.25:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=21:alpha=0.5:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      }
+    },
+    "layer=21:alpha=0.5:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      }
+    },
+    "layer=21:alpha=0.5:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=21:alpha=1:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      }
+    },
+    "layer=21:alpha=1:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      }
+    },
+    "layer=21:alpha=1:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      }
+    },
+    "layer=23:alpha=0.25:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=23:alpha=0.25:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=23:alpha=0.25:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=23:alpha=0.5:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      }
+    },
+    "layer=23:alpha=0.5:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      }
+    },
+    "layer=23:alpha=0.5:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=23:alpha=1:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=23:alpha=1:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "layer=23:alpha=1:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      }
+    },
+    "layer=25:alpha=0.25:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.2,
+        "ci": [
+          0.0,
+          0.6
+        ]
+      }
+    },
+    "layer=25:alpha=0.25:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      }
+    },
+    "layer=25:alpha=0.25:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=25:alpha=0.5:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=25:alpha=0.5:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      }
+    },
+    "layer=25:alpha=0.5:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.4,
+        "ci": [
+          0.0,
+          0.8
+        ]
+      }
+    },
+    "layer=25:alpha=1:schedule=every1:mode=random": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.8,
+        "ci": [
+          0.4,
+          1.0
+        ]
+      }
+    },
+    "layer=25:alpha=1:schedule=every1:mode=rescue": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 1.0,
+        "ci": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "layer=25:alpha=1:schedule=every1:mode=reverse": {
+      "n": 5,
+      "boxed_math_accuracy": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      },
+      "gain_over_corrupt": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      },
+      "aggregate_recovery_fraction": {
+        "mean": 0.6,
+        "ci": [
+          0.2,
+          1.0
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "complete": true,
+  "passed": 12,
+  "total": 12,
+  "checks": {
+    "online_matrix_240_complete": {
+      "passed": true,
+      "evidence": {
+        "completed": 240,
+        "missing": 0
+      }
+    },
+    "online_random_80_complete": {
+      "passed": true,
+      "evidence": 80
+    },
+    "online_five_arms": {
+      "passed": true,
+      "evidence": {
+        "baseline": true,
+        "interventions": 240
+      }
+    },
+    "deterministic_random_seeds": {
+      "passed": true,
+      "evidence": {
+        "random_arms": 80,
+        "seeded": 80
+      }
+    },
+    "prm_teacher_forced_100": {
+      "passed": true,
+      "evidence": 100
+    },
+    "prm_online_baseline_100": {
+      "passed": true,
+      "evidence": 100
+    },
+    "prm_online_full_residual": {
+      "passed": true,
+      "evidence": {
+        "damaged": 5,
+        "evaluated": 5
+      }
+    },
+    "prm_online_projected_subspace": {
+      "passed": true,
+      "evidence": {
+        "expected": 5,
+        "evaluated": 5
+      }
+    },
+    "residual_decay_108": {
+      "passed": true,
+      "evidence": 108
+    },
+    "residual_decay_summary": {
+      "passed": true,
+      "evidence": {
+        "lags": 128,
+        "tau": 0.633122288895294
+      }
+    },
+    "spatiotemporal_fpca": {
+      "passed": true,
+      "evidence": {
+        "n_test": 33,
+        "temporal_rank95": 18
+      }
+    },
+    "heldout_subspace": {
+      "passed": true,
+      "evidence": {
+        "n": 33,
+        "arms": 19
+      }
+    }
+  }
+}

@@ -111,7 +111,68 @@ one spatial direction explains only 0.8%; 32 time functions explain about 69%, a
 steering direction. Linear one-step dynamics also fit poorly (`R^2 = 0.0094`), while the low raw
 Hankel rank is dominated by the same nuisance component.
 
-The decisive remaining gate is online autoregressive intervention with residuals recomputed on
-the arm's actual prefix, evaluated by mathematical boxed-answer equivalence. Correct, corrupt,
-rescue, sign-reversed, and norm-matched-random arms plus layer/alpha/refresh sweeps are running;
-PRM800K paired-step validation and residual-persistence estimation follow automatically.
+## Final dynamic-mechanism checkpoint
+
+The online autoregressive gate is now complete. At every generated token, the correct and
+dependency-broken references are evaluated on the arm's current prefix, and the paired residual
+is recomputed before sampling the next token. The original single-problem matrix covered all
+`4 layers x 4 alphas x 5 refresh schedules x 3 interventions = 240` configurations, plus correct
+and corrupt baselines. It did not yield a strictly selective configuration and is a negative
+generalization result.
+
+Independent PRM800K validation first evaluated 100 same-prefix correct/incorrect step pairs.
+Teacher-forced mediation replicated in late layers: layer-23 rescue was `+0.03705`
+(`95% CI [0.01065, 0.06345]`) and necessity was `-0.02860`
+(`[-0.04759, -0.00961]`); layer-25 rescue was `+0.05213`
+(`[0.02846, 0.07580]`) and necessity was `-0.03580`
+(`[-0.05653, -0.01507]`). A norm-matched random layer-25 intervention was null
+(`-0.01192`, `[-0.02490, 0.00106]`).
+
+Only five of the 100 PRM pairs had a correct-reference boxed answer and an incorrect-reference
+boxed answer under 1,024-token free generation. The following online results are therefore
+**conditional on behaviorally damaged examples selected by the baseline**, not an estimate of
+population accuracy:
+
+| Layer / alpha | Rescue | Sign-reversed | Norm-matched random | Aggregate recovery |
+|---|---:|---:|---:|---:|
+| 21 / 0.5 | 4/5 | 2/5 | 1/5 | 0.80 |
+| 21 / 1.0 | 4/5 | 1/5 | 1/5 | 0.80 |
+| 23 / 0.5 | 4/5 | 2/5 | 1/5 | 0.80 |
+| **23 / 1.0** | **5/5** | **1/5** | **2/5** | **1.00** |
+| 25 / 1.0 | 5/5 | 3/5 | 4/5 | 1.00 |
+
+Layer 23 at alpha 1 is the cleanest oracle result. Layer 25 is not selective despite perfect
+rescue because random perturbations also solve four of five examples. With only five selected
+problems, bootstrap intervals are wide and paired superiority is not independently significant;
+this is evidence that the dynamic mediator exists, not evidence for a deployable method.
+
+A train-only rank-16 PCA projection fails the independent online gate. At both alpha 0.5 and 1,
+projected rescue solves `0/5`; sign-reversed solves `1/5` and `2/5`, respectively, and random
+solves `1/5` at each alpha. Thus the earlier teacher-forced partial retention does not transfer to
+online generation. Static PCA16 and the causal contrastive eigenspace are both **NO-GO**.
+
+Residual-persistence measurement uses 108 problems, six injection origins per problem, and all
+128 future lags. The meaningful signal is target-projected recovery minus its norm-matched-random
+control. It falls from `0.52659` at lag 0 to `0.07055` at lag 1 and `0.02236` at lag 2. The fitted
+initial excess time constant is `0.633 token`, one-step excess retention is `13.4%`, the
+interpolated half-life is `0.577 token`, and the e-fold crossing is `0.730 token`. A naive fit to
+raw projected recovery gives an apparent `tau=205`, but that is a random-control floor and is
+retained only as a legacy diagnostic. The causal correction has sub-token effective memory and
+must be recurrently refreshed.
+
+The held-out FPCA result is consistent with this decay: 64 temporal functions are needed for
+about 90% held-out variance and all 128 for about 95%, whereas increasing spatial rank from 1 to
+64 adds little at fixed temporal rank. The mediator is temporally complex rather than a fixed
+low-dimensional steering vector.
+
+## Updated decision
+
+- Dynamic, prefix-matched privileged mediation: **mechanism GO**, conditional and oracle-only.
+- Static direction, PCA16, generalized eigenspace, and one-shot/short-window steering:
+  **NO-GO**.
+- Deployable dynamic distillation or Qwen3-4B/5k training: **still NO-GO** until a learned field
+  predicts the online residual on held-out prefixes without requiring correct and corrupt
+  references at inference time.
+
+The strict artifact audit passes all 12 checks, including the 240-arm matrix, deterministic random
+controls, PRM teacher-forced and online validation, 108-problem decay, held-out subspace, and FPCA.

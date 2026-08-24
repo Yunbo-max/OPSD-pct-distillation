@@ -78,10 +78,14 @@ def main() -> None:
     parser.add_argument("--temperature", type=float, default=0.7)
     parser.add_argument("--top_p", type=float, default=0.95)
     parser.add_argument("--seed", type=int, default=20260824)
+    parser.add_argument("--node_ids", default=None, help="Comma-separated selected node ids to retain.")
     args = parser.parse_args()
 
     rows = {str(row["id"]): row for row in map(json.loads, Path(args.dataset).open())}
     nodes = choose_nodes(Path(args.cache_dir), args.start_problem, args.n_nodes, args.seed)
+    if args.node_ids:
+        retained = set(args.node_ids.split(","))
+        nodes = [node for node in nodes if f'{node["id"]}|{node["rollout"]}|{node["position"]}' in retained]
     output = Path(args.out); output.parent.mkdir(parents=True, exist_ok=True); output.touch(exist_ok=True)
     completed = {json.loads(line)["id"] for line in output.read_text().splitlines() if line}
     tokenizer = AutoTokenizer.from_pretrained(args.model)

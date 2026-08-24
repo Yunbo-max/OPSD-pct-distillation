@@ -176,3 +176,64 @@ low-dimensional steering vector.
 
 The strict artifact audit passes all 12 checks, including the 240-arm matrix, deterministic random
 controls, PRM teacher-forced and online validation, 108-problem decay, held-out subspace, and FPCA.
+
+## Predictability gate: conditional projection is not enough
+
+The first reference-free predictability gate uses Qwen3-4B and 1,000 unique PRM800K problems
+(74,791 token states), with a strict 70/15/15 problem split. The primary analysis further restricts
+to 598 pairs that contain an explicit downstream continuation, leaving 418/89/91 train/validation/
+test problems. Student-visible layer-23 states predict the layer-23 paired oracle residual
+`C_t = h_t^+ - h_t^-`; no privileged input enters any predictor at evaluation time.
+
+Linear prediction is measurable but weak. On held-out tokens, Ridge obtains `R^2=0.00798` and
+cosine `0.1311`; RRR-16/64 obtain `0.00769/0.00811`; CCA-16/64 obtain `0.00471/0.00444`.
+Problem-mean R-squared values are approximately zero or negative, showing that the small positive
+token-weighted score is concentrated in high-energy problems. This is not a lack of structure in
+the target itself: oracle target PCA-16 and PCA-64 retain `16.9%` and `29.8%` of held-out residual
+variance. Rather, the high-variance privileged structure is largely not linearly identifiable from
+the deployment-visible state. Repeating the analysis on all 1,000 pairs gives the same ordering and
+conclusion.
+
+More importantly, a predicted residual must be evaluated as an intervention, not only as a
+regression target. On all 91 held-out downstream problems, adding the exact oracle residual to the
+unprivileged student state is not an oracle rescue: at alpha 1 it changes mean gold-continuation
+log-prob by `-0.02280` (95% bootstrap CI `[-0.04546,-0.00244]`) and tail-16 log-prob by
+`-0.05262`. The effect is dose dependent: alpha 0.25 is approximately null overall and already
+negative on the tail; alpha 0.5 is null overall and negative on the tail. Thus the displacement
+`h^+ - h^-` is causal in its original corrupt-privileged base point but is not translation-equivariant
+to the unprivileged student base point.
+
+The learned full fields inherit the same failure. At alpha 1, Mean, Ridge, RRR-64, and CCA-64
+change mean gold log-prob by `-0.04617`, `-0.04359`, `-0.04337`, and `-0.04400`, respectively.
+Norm-matched random intervention is null. Reversing RRR-64 instead gives `+0.03965`, but an
+explicit reverse-mean control gives `+0.04366`; therefore this large effect is almost entirely a
+generic global steering direction, not sample-specific conditional prediction.
+
+After subtracting the train-set mean residual, the sample-dependent predictor has a small positive
+effect: centered Ridge, RRR-64, and CCA-64 at alpha 1 give `+0.00316`, `+0.00266`, and `+0.00273`.
+Their 95% intervals narrowly exclude zero for the overall continuation metric; only centered CCA-64
+also has a positive tail-16 interval. These effects are too small to pass a deployability gate and
+must be checked in free generation before being interpreted as transferable computation.
+
+### Predictability decision
+
+- Linear conditional predictability of the paired field: **weak positive, below gate**.
+- Full oracle or learned field transported to the student base point: **NO-GO**.
+- Centered sample-specific field: **small exploratory signal, not yet a method**.
+- Qwen3-4B/5k distillation and MLP expansion: **do not launch** unless reference-free online
+  generation validates the centered component.
+
+The result refines the mathematical object required by a deployable method. Conditional expectation
+`E[C_t | F_t^S]` minimizes residual prediction error, but it does not guarantee that the predicted
+vector belongs to a beneficial intervention tangent space at `h_t^S`. A valid next target must be
+student-anchored and outcome-aware (for example, a student-base causal effect or a locally learned
+transport/Jacobian), rather than the paired privileged displacement alone.
+
+A final 2,048-token reference-free online pilot does not rescue the gate. On the held-out problem,
+student and corrupt arms truncate without an answer; centered RRR-64 produces the wrong answer
+`180`; centered CCA-64 and the transported oracle both produce the same wrong answer `720`; and
+centered Ridge, reverse mean, reverse-centered RRR, and random-centered RRR truncate. The dataset
+gold answer is `5/16`. Because the transported oracle itself fails, no meaningful online oracle
+recovery retention can be computed on this sample. Together with the complete 91-problem
+teacher-forced intervention, this pilot is sufficient to stop the proposed RRR/CCA expansion rather
+than launch a selectively screened free-generation matrix.

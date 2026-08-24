@@ -5,3 +5,6 @@ __pycache__/
 runs/
 eval_results/
 tmp/
+
+# Large, reproducible hidden-state caches from the predictability gate.
+artifacts/privileged_effect/predictable_field_qwen3_4b_*/

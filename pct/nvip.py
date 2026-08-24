@@ -71,7 +71,10 @@ def sequential_audit_decision(
         raise ValueError("every branch needs at least one initial rollout")
 
     lower, upper = wilson_interval(successes, trials, z=z)
-    mean = successes.float() / trials.float()
+    empirical_mean = successes.float() / trials.float()
+    # Wilson intervals are asymmetric near 0/1.  Represent the confidence box
+    # by its actual midpoint and half-width, not phat +/- half-width.
+    mean = (lower + upper) / 2
     radius = (upper - lower) / 2
     confidence = teacher_advantage_confidence(
         student_probs, teacher_probs, mean, radius, delta=delta
@@ -90,6 +93,7 @@ def sequential_audit_decision(
         **confidence,
         "decision": decision,
         "value_mean": mean,
+        "empirical_value_mean": empirical_mean,
         "value_lower": lower,
         "value_upper": upper,
         "value_radius": radius,

@@ -73,3 +73,15 @@ def test_sequential_audit_abstains_at_budget_limit():
     )
     assert result["decision"] == "abstain"
     assert result["next_action"] is None
+
+
+def test_sequential_audit_uses_asymmetric_wilson_midpoint():
+    result = sequential_audit_decision(
+        torch.tensor([0.5, 0.5]), torch.tensor([0.5, 0.5]),
+        torch.tensor([0, 4]), torch.tensor([4, 4]), max_trials=4,
+    )
+    assert torch.all(result["value_lower"] >= 0)
+    assert torch.all(result["value_upper"] <= 1)
+    assert torch.allclose(
+        result["value_mean"], (result["value_lower"] + result["value_upper"]) / 2
+    )

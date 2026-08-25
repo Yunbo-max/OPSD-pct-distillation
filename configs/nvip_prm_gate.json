@@ -1,0 +1,20 @@
+{
+  "name": "nvip_prm_next_step_gate_v1",
+  "development_nodes": 26,
+  "student_model": "Qwen/Qwen3-4B",
+  "prm_model": "Qwen/Qwen2.5-Math-PRM-7B",
+  "pairs_per_node": 8,
+  "short_step_cap_tokens": 64,
+  "terminal_cap_tokens": 512,
+  "step_separator": "\\n\\n -> <extra_0>",
+  "gates": {
+    "direction": "node Spearman(A_prm, A_terminal) > 0.4",
+    "variance": "independent PRM control-variate CI width < 0.70 terminal CI width at equal generated-token budget",
+    "classification": "sign/decision agreement > 0.70 against independent high-budget terminal reference"
+  },
+  "data_firewall": {
+    "development": "fixed 26 nodes",
+    "construction": "fresh Jordan branches for PRM and terminal scores",
+    "evaluation": "independent terminal branches after Gate 1/2"
+  }
+}

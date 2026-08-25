@@ -20,7 +20,7 @@ def jordan_signed_measures(
     student_probs: torch.Tensor,
     teacher_probs: torch.Tensor,
     *,
-    tolerance: float = 1e-7,
+    tolerance: float = 1e-4,
 ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
     """Return TV mass and normalized positive/negative parts of q-p."""
     if student_probs.ndim != 1 or student_probs.shape != teacher_probs.shape:

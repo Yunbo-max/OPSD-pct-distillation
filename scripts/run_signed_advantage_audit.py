@@ -73,7 +73,9 @@ def main():
       with torch.inference_mode(): gen=model.generate(node,attention_mask=torch.ones_like(node),do_sample=True,temperature=.7,top_p=.95,max_new_tokens=args.max_new_tokens,pad_token_id=tok.pad_token_id,eos_token_id=tok.eos_token_id)
       text=tok.decode(torch.cat((pref,torch.tensor([action]),gen[0,node.shape[1]:].cpu())),skip_special_tokens=True); vals.append(int(answers_equivalent(boxed(text),row['answer'])))
      ds.append(vals[0]-vals[1])
-    x=torch.tensor(ds,dtype=torch.float32); mean=float(x.mean()); radius=eb_radius(x); lower=alpha*(mean-radius); upper=alpha*(mean+radius)
+    x=torch.tensor(ds,dtype=torch.float32); mean=float(x.mean()); radius=eb_radius(x)
+    # D is bounded in [-1,1], hence |A_T| <= alpha=TV(p,q).
+    lower=alpha*max(-1.0, mean-radius); upper=alpha*min(1.0, mean+radius)
     if lower>args.delta: decision='helpful'; break
     if upper<-args.delta: decision='harmful'; break
     if target>=args.max_pairs: decision='abstain'; break

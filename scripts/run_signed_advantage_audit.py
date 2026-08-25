@@ -29,6 +29,7 @@ def main():
  ap.add_argument('--nodes_per_problem',type=int,default=2); ap.add_argument('--initial_pairs',type=int,default=8)
  ap.add_argument('--max_pairs',type=int,default=64); ap.add_argument('--delta',type=float,default=.01)
  ap.add_argument('--max_new_tokens',type=int,default=512); ap.add_argument('--seed',type=int,default=20260827)
+ ap.add_argument('--pair_batch_size',type=int,default=8)
  args=ap.parse_args(); rows={str(x['id']):x for x in map(json.loads,Path(args.dataset).open())}
  tok=AutoTokenizer.from_pretrained(args.model)
  if tok.pad_token_id is None: tok.pad_token=tok.eos_token
@@ -64,15 +65,24 @@ def main():
    p=next_logits(model,torch.cat((sp,pref.unsqueeze(0).cuda()),1)).softmax(0); q=next_logits(model,torch.cat((tp,pref.unsqueeze(0).cuda()),1)).softmax(0)
    diff=q-p; alpha=float(diff.clamp_min(0).sum()); nuplus=diff.clamp_min(0)/max(alpha,1e-30); numinus=(-diff).clamp_min(0)/max(alpha,1e-30)
    ds=[]; target=args.initial_pairs
+   def sample_pairs(n_pairs, start):
+    plus=torch.multinomial(nuplus,n_pairs,replacement=True)
+    minus=torch.multinomial(numinus,n_pairs,replacement=True)
+    actions=torch.cat((plus,minus))
+    common=torch.cat((sp[0].cpu(),pref)).unsqueeze(0).expand(2*n_pairs,-1)
+    nodes=torch.cat((common,actions.unsqueeze(1)),1).cuda()
+    torch.manual_seed(seed_for(args.seed,f'{key}|batch|{start}'))
+    with torch.inference_mode():
+     generated=model.generate(nodes,attention_mask=torch.ones_like(nodes),do_sample=True,temperature=.7,top_p=.95,
+       max_new_tokens=args.max_new_tokens,pad_token_id=tok.pad_token_id,eos_token_id=tok.eos_token_id)
+    out=[]
+    for j in range(2*n_pairs):
+     text=tok.decode(torch.cat((pref,actions[j:j+1],generated[j,nodes.shape[1]:].cpu())),skip_special_tokens=True)
+     out.append(int(answers_equivalent(boxed(text),row['answer'])))
+    return [out[i]-out[n_pairs+i] for i in range(n_pairs)]
    while True:
     while len(ds)<target:
-     ip=len(ds); apid=int(torch.multinomial(nuplus,1).item()); amin=int(torch.multinomial(numinus,1).item())
-     vals=[]
-     for side,action in (('plus',apid),('minus',amin)):
-      node=torch.cat((sp[0].cpu(),pref,torch.tensor([action]))).unsqueeze(0).cuda(); torch.manual_seed(seed_for(args.seed,f'{key}|{ip}|{side}'))
-      with torch.inference_mode(): gen=model.generate(node,attention_mask=torch.ones_like(node),do_sample=True,temperature=.7,top_p=.95,max_new_tokens=args.max_new_tokens,pad_token_id=tok.pad_token_id,eos_token_id=tok.eos_token_id)
-      text=tok.decode(torch.cat((pref,torch.tensor([action]),gen[0,node.shape[1]:].cpu())),skip_special_tokens=True); vals.append(int(answers_equivalent(boxed(text),row['answer'])))
-     ds.append(vals[0]-vals[1])
+     n_pairs=min(args.pair_batch_size,target-len(ds)); ds.extend(sample_pairs(n_pairs,len(ds)))
     x=torch.tensor(ds,dtype=torch.float32); mean=float(x.mean()); radius=eb_radius(x)
     # D is bounded in [-1,1], hence |A_T| <= alpha=TV(p,q).
     lower=alpha*max(-1.0, mean-radius); upper=alpha*min(1.0, mean+radius)
